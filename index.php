@@ -1,3 +1,2 @@
 <?php
-echo "string";
-?>
+echo json_encode("string");

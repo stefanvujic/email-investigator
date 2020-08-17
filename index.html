@@ -5,25 +5,38 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-		<title>The Net Knows</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+<!-- 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+ -->		<title>The Net Knows</title>
 	</head>
+
  	<body>
-		<form>
-			<div class="form-group">
-				<label for="exampleInputEmail1">Email address</label>
-				<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+ 		<div class="container mt-5">
+	 		<div class="row">
+	 			<div class="col main-form">
+					<form>
+						<div class="form-group">
+							<input id="email" type="text" class="form-control text-center" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+							<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+<!-- 							<div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div> -->
+						</div>
+						<div id="submit-main-form" class="btn btn-primary">Submit</div>
+					</form>
+				</div>
 			</div>
-			<div class="form-group">
-				<label for="exampleInputPassword1">Password</label>
-				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+		</div>	
+
+ 		<div class="container mt-5">
+	 		<div class="row align-items-center">
+	 			<div class="col main-result">
+	 				<ul class="google-results-list">
+	 					
+	 				</ul>
+				</div>
 			</div>
-			<div class="form-group form-check">
-				<input type="checkbox" class="form-check-input" id="exampleCheck1">
-				<label class="form-check-label" for="exampleCheck1">Check me out</label>
-			</div>
-			<div class="btn btn-primary">Submit</div>
-		</form>
+		</div>		
 	</body>
+
 	<script type="text/javascript" src="/js/app.js"></script>
+
 </html>

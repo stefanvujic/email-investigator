@@ -1,0 +1,8 @@
+.main-form, .main-result {
+	text-align: center;
+}
+
+ul.google-results-list {
+	list-style: none;
+	padding-left: 0;
+}
