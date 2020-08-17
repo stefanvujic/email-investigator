@@ -1,8 +1,8 @@
-function get_post_response($url, parameters) {
+function getPostResponse(url, parameters) {
 	var response;
 	$.post({
 		type: "POST",
-		url: $url,
+		url: url,
 		dataType:"json",
 		data: (parameters),
 		async: false,
@@ -17,15 +17,24 @@ $(document).ready(function() {
 	$("#submit-main-form").on("click", function(){
 
 		var email = $("#email").val();
-    	var call_controller = get_post_response("http://localhost/ajax_controller.php", {email : email});
+    	var callController = getPostResponse("http://localhost/ajax_controller.php", {email : email});
 
     	var html;
-		$.each(call_controller, function(key, value) {
-			// html += "<li>" + value.title + "</li>"; 
-			// html += "<li>" + value.excerpt + "</li>";
-			html += "<li><a href='" + value.url + "'>" + value.url + "</li>";			
-		});    	
+		$.each(callController, function(scraperName, scraperData) {
+
+			$.each(scraperData, function(pageIndex, pageData) {
+
+				$.each(pageData, function(recordIndex, record) {
+
+					html += "<li><a href='" + record.title + "' target=_blank>" + record.title + "</li>";
+
+				});
+
+			});
+
+		});
+
     	$(".google-results-list").append(html);
-    	console.log(call_controller);
+    	// console.log(callController);
 	});
 });
