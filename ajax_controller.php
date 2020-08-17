@@ -1,5 +1,6 @@
 <?php
 include('simple_html_dom.php');
+include_once('class.verifyEmail.php');
 
 function curl_response($url, $email) {
 
@@ -11,6 +12,24 @@ function curl_response($url, $email) {
 	curl_close($curl);
 
 	return $result;
+}
+
+function get_email_status($email) {
+
+	$vmail = new verifyEmail();
+	$vmail->setStreamTimeoutWait(20);
+	$vmail->Debug= TRUE;
+	$vmail->Debugoutput= 'html';
+
+	$vmail->setEmailFrom('localhost@admin.com');
+
+	if ($vmail->check($email)) {
+		$email_exists = true;
+	}else {
+		$email_exists = false;
+	}
+
+	return $email_exists;
 }
 
 function scrape_google($email) {
@@ -50,7 +69,34 @@ function scrape_google($email) {
 	return $result;
 }
 
+function scrape_bing($email) {
+	$curl_response = curl_response("https://www.bing.com/search?q=", $email);
+	$dom = new simple_html_dom();
+	$dom->load($curl_response);
+
+	$ctr = 0;
+	$bing_records = array();
+	foreach($dom->find("li.b_algo") as $result_container) {
+
+		$title = $result_container->find("h2", 0)->plaintext;
+		$excerpt = $result_container->plaintext;
+		$url = $result_container->find("a", 0)->href;
+
+		$bing_records[$ctr]["title"] = $title;
+		$bing_records[$ctr]["excerpt"] = $excerpt;
+		$bing_records[$ctr]["url"] = $url;
+
+		$ctr++;
+	}
+
+	$results = array('1' => $bing_records);
+
+	return $results;
+}
+
 if ($_POST["email"]) {
 	echo json_encode(array(
-		"google" => scrape_google($_POST["email"])));
+		"google" => scrape_google($_POST["email"]),
+		"bing" => scrape_bing($_POST["email"]),
+	));
 }

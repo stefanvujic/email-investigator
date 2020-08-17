@@ -20,13 +20,15 @@ $(document).ready(function() {
     	var callController = getPostResponse("http://localhost/ajax_controller.php", {email : email});
 
     	var html;
-		$.each(callController, function(scraperName, scraperData) {
+    	html = "";
+		$.each(callController, function(data, scraperData) {
 
 			$.each(scraperData, function(pageIndex, pageData) {
 
 				$.each(pageData, function(recordIndex, record) {
+					console.log(record);
 
-					html += "<li><a href='" + record.title + "' target=_blank>" + record.title + "</li>";
+					html += "<li><a href='" + record.url + "' target=_blank>" + record.title + "</li>";
 
 				});
 
