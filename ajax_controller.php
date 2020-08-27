@@ -1,17 +1,42 @@
 <?php
 include('simple_html_dom.php');
+include('scrapers/google_scraper.php');
+include('scrapers/bing_scraper.php');
 include_once('class.verifyEmail.php');
 
-function curl_response($url, $email) {
+function curl_response($url, $email, $headers=false) {
 
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $url . $email);
 	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 	$result = curl_exec($curl);
 	curl_close($curl);
 
 	return $result;
+}
+
+function verify_recapcha_v2($secret) {
+	$curlx = curl_init();
+
+	curl_setopt($curlx, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+	curl_setopt($curlx, CURLOPT_HEADER, 0);
+	curl_setopt($curlx, CURLOPT_RETURNTRANSFER, 1); 
+	curl_setopt($curlx, CURLOPT_POST, 1);
+
+	$post_data = [
+	    "secret" => $secret,
+	    "response" => $_POST["googleCapcha"]
+	];
+
+	curl_setopt($curlx, CURLOPT_POSTFIELDS, $post_data);
+
+	$resp = json_decode(curl_exec($curlx));
+
+	curl_close($curlx);
+
+	return $resp->success;
 }
 
 function get_email_status($email) {
@@ -32,71 +57,47 @@ function get_email_status($email) {
 	return $email_exists;
 }
 
-function scrape_google($email) {
-	$result = array();
-	for ($page = 0; $page < 2; $page++) { 
-		$curl_response = curl_response("https://www.google.com/search?q=", $email . "&start=" . $page . 0);
-		$dom = new simple_html_dom();
-		$dom->load($curl_response);
+function call_have_i_been_pawned($email) {
+	$headers = array(
+    	"hibp-api-key: 356caf020183406f88b0a67e4c445867",
+    	"user-agent: email_investigator",
+	);
 
-		$ctr = 0;
-		$google_records = array();
-		foreach($dom->find("div.ZINbbc.xpd.O9g5cc.uUPGi") as $result_container) {
+	$breaches = curl_response("https://haveibeenpwned.com/api/v3/breachedaccount/", $email, $headers);
+	$breaches = json_decode($breaches);
 
-			$title = $result_container->first_child()->plaintext;
-			$excerpt = $result_container->children(2)->plaintext;
-			$url = $result_container->find("a", 0)->href;
-
-			$google_records[$ctr]["title"] = $title;
-			$google_records[$ctr]["excerpt"] = $excerpt;
-			$google_records[$ctr]["url"] = $url;
-
-			$ctr++;
-		}
-
-		foreach ($google_records as $key => $google_record) {
-
-			if (strpos($google_record["title"], $email) !== false || strpos($google_record["excerpt"], $email) !== false) {
-				$result[$page][$key]["title"] = $google_record["title"];
-				$result[$page][$key]["excerpt"] = $google_record["excerpt"];
-				$result[$page][$key]["url"] = str_replace("/url?q=", "", $google_record["url"]);
-			}
+	$breach_list = array();
+	foreach ($breaches as $breach) {
+		foreach ($breach as $breach_name) {
+			$breach_list[] = $breach_name;
 		}
 	}
 
-	$result = mb_convert_encoding($result, "UTF-8", "UTF-8");
-
-	return $result;
+	return $breach_list;
 }
 
-function scrape_bing($email) {
-	$curl_response = curl_response("https://www.bing.com/search?q=", $email);
-	$dom = new simple_html_dom();
-	$dom->load($curl_response);
+$email = $_POST["email"];
 
-	$ctr = 0;
-	$bing_records = array();
-	foreach($dom->find("li.b_algo") as $result_container) {
+call_have_i_been_pawned("stefanvujic@icloud.com");
 
-		$title = $result_container->find("h2", 0)->plaintext;
-		$excerpt = $result_container->plaintext;
-		$url = $result_container->find("a", 0)->href;
+if ($email) {
+	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		$capcha_response = verify_recapcha_v2("6LdmtcAZAAAAAC73DOUkWIK0zAo4wHaK7gJknjMp");
 
-		$bing_records[$ctr]["title"] = $title;
-		$bing_records[$ctr]["excerpt"] = $excerpt;
-		$bing_records[$ctr]["url"] = $url;
-
-		$ctr++;
+		// if ($capcha_response) {
+			echo json_encode(
+				array(
+					"data" => array(
+						"have_i_been_pawned" => call_have_i_been_pawned($email)
+					),	
+					"scrapers" => array(
+						"google" => scrape_google($email, 2),
+						"bing" => scrape_bing($email)
+					)
+				)
+			);
+		// }
+	}else {
+		echo json_encode("bad email");
 	}
-
-	$results = array('1' => $bing_records);
-
-	return $results;
-}
-
-if ($_POST["email"]) {
-	echo json_encode(array(
-		"google" => scrape_google($_POST["email"]),
-		"bing" => scrape_bing($_POST["email"]),
-	));
 }

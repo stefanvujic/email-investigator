@@ -6,32 +6,33 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-<!-- 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
- -->		<title>The Net Knows</title>
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+		<title>The Net Knows</title>
 	</head>
 
  	<body>
  		<div class="container mt-5">
 	 		<div class="row">
 	 			<div class="col main-form">
-					<form>
-						<div class="form-group">
-							<input id="email" type="text" class="form-control text-center" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-							<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-<!-- 							<div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div> -->
-						</div>
-						<div id="submit-main-form" class="btn btn-primary">Submit</div>
-					</form>
+					<div class="form-group">
+						<input id="email" type="text" class="form-control text-center" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+						<small id="error-message"></small>
+					</div>
+					<div id="submit-main-form" class="btn btn-primary">Submit</div>
 				</div>
 			</div>
-		</div>	
+		</div>
+
+		<form action="#" id="captcha_form">
+			<div class="g-recaptcha" data-sitekey="6LdmtcAZAAAAAP0EWf3Fq4ZvnSEPSkfS-iOe7i8i"></div>
+		</form>
 
  		<div class="container mt-5">
 	 		<div class="row align-items-center">
-	 			<div class="col main-result">
-	 				<ul class="google-results-list">
-	 					
-	 				</ul>
+	 			<div id="main-result" class="container">
+	 				<div class="row record-row">
+					</div>				
 				</div>
 			</div>
 		</div>		

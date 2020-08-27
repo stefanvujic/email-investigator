@@ -1,7 +1,7 @@
 <?php
-function scrape_google($email) {
+function scrape_google($email, $page_count) {
 	$result = array();
-	for ($page = 0; $page < 2; $page++) { 
+	for ($page = 0; $page < $page_count; $page++) { 
 		$curl_response = curl_response("https://www.google.com/search?q=", $email . "&start=" . $page . 0);
 		$dom = new simple_html_dom();
 		$dom->load($curl_response);
@@ -17,10 +17,12 @@ function scrape_google($email) {
 			$excerpt = $result_container->children(2)->plaintext;
 			$url = $result_container->find("a", 0)->href;
 
-			$google_records[$ctr]["website"] = $website;
-			$google_records[$ctr]["title"] = $title;
-			$google_records[$ctr]["excerpt"] = $excerpt;
-			$google_records[$ctr]["url"] = $url;
+			if (!empty($website) && !empty($title) && !empty($excerpt) && !empty($url)) {
+				$google_records[$ctr]["website"] = $website;
+				$google_records[$ctr]["title"] = $title;
+				$google_records[$ctr]["excerpt"] = $excerpt;
+				$google_records[$ctr]["url"] = $url;
+			}
 
 			$ctr++;
 		}

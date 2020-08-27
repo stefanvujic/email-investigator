@@ -17,10 +17,12 @@ function scrape_bing($email) {
 		$excerpt = $result_container->plaintext;
 		$url = $result_container->find("a", 0)->href;
 
-		$bing_records[$ctr]["website"] = $website;
-		$bing_records[$ctr]["title"] = $title;
-		$bing_records[$ctr]["excerpt"] = $excerpt;
-		$bing_records[$ctr]["url"] = $url;
+		if (!empty($website) && !empty($title) && !empty($excerpt) && !empty($url)) {
+			$bing_records[$ctr]["website"] = $website;
+			$bing_records[$ctr]["title"] = $title;
+			$bing_records[$ctr]["excerpt"] = $excerpt;
+			$bing_records[$ctr]["url"] = $url;
+		}
 
 		$ctr++;
 	}
@@ -29,4 +31,4 @@ function scrape_bing($email) {
 
 	return $results;
 }
-?>
+

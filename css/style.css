@@ -1,8 +1,33 @@
-.main-form, .main-result {
+div.main-form {
 	text-align: center;
 }
 
-ul.google-results-list {
-	list-style: none;
-	padding-left: 0;
+div#main-result {
+	margin-left: 20px;
+    margin-right: 20px;
 }
+
+div.record-row {
+    text-align: center;
+    min-height: 60px;
+    max-height: 60px;
+    height: 60px;
+    font-size: 14px;
+}
+
+div.website-title {
+    text-align: left;
+    color: #b6b6b6;
+}
+
+div#loader {
+	text-align: center;
+}
+
+#error-message {
+	color: red;
+}
+
+/*div#submit-main-form {
+	pointer-events: none;
+}*/
