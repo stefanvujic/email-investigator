@@ -2,24 +2,33 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="assets/logo.svg" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-		<title>The Net Knows</title>
+		<title>Email Investigator</title>
 	</head>
 
  	<body>
+ 		<div class="container mt-5">
+ 			<div class="row">
+ 				<div class="col">
+					<h1 class="display-3 big-logo">Email Investigator<img class="logo-image" src="assets/logo.svg"></div></h1>
+				</div>
+			</div>
+		</div>
+
  		<div class="container mt-5">
 	 		<div class="row">
 	 			<div class="col main-form">
 					<div class="form-group">
 						<input id="email" type="text" class="form-control text-center" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-						<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+						<small id="emailHelp" class="form-text text-muted">We won't not log your email</small>
 						<small id="error-message"></small>
 					</div>
-					<div id="submit-main-form" class="btn btn-primary">Submit</div>
+					<div id="submit-main-form" class="btn btn-primary">Investigate</div>
 				</div>
 			</div>
 		</div>
@@ -29,10 +38,8 @@
 		</form>
 
  		<div class="container mt-5">
-	 		<div class="row align-items-center">
+	 		<div class="row align-items-center result-container-wrapper">
 	 			<div id="main-result" class="container">
-	 				<div class="row record-row">
-					</div>				
 				</div>
 			</div>
 		</div>		

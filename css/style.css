@@ -1,10 +1,29 @@
+body {
+    background-color: #212529;
+    color: #07a9c3;
+}
 div.main-form {
 	text-align: center;
 }
-
-div#main-result {
+h1.big-logo {
+	text-align: center;
+}
+div.result-container-wrapper {
+/*	border-radius: 8px;
+    border-width: 2px;*/
+}
+div.main-result {
 	margin-left: 20px;
     margin-right: 20px;
+    padding-top: 10px;
+/*    border-radius: 8px;
+    border-width: 2px;*/
+}
+
+div#loader-container {
+	margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 10px;
 }
 
 div.record-row {
@@ -18,6 +37,10 @@ div.record-row {
 div.website-title {
     text-align: left;
     color: #b6b6b6;
+    padding: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0;
 }
 
 div#loader {
@@ -27,7 +50,41 @@ div#loader {
 #error-message {
 	color: red;
 }
+.logo-image {
+	width: 125px;
+}
 
-/*div#submit-main-form {
-	pointer-events: none;
-}*/
+@media only screen and (max-width: 1281px) {
+	.container, .container-md, .container-sm {
+	    max-width: 900px;
+	}
+	div.record-row {
+	    text-align: center;
+	    max-height: 126px;
+	    font-size: 14px;
+	    background: #3d3d3d;
+	    border-radius: 19px;
+	    height: 126px;
+	    padding-top: 10px;
+	    margin-left: 25px;
+	    margin-right: 25px;
+	}
+}
+#captcha_form {
+	display: none;
+}
+.site-title-text {
+    text-align: center;
+    background: #07a9c3;
+    border-radius: 5px 5px 0px 0px;
+    color: #ffff;
+}
+#submit-main-form {
+    background: #07a9c3;
+    border-color: #07a9c3;	
+}
+.empty-message {
+    text-align: center;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+}

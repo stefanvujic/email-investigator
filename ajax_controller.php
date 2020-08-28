@@ -78,8 +78,6 @@ function call_have_i_been_pawned($email) {
 
 $email = $_POST["email"];
 
-call_have_i_been_pawned("stefanvujic@icloud.com");
-
 if ($email) {
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		$capcha_response = verify_recapcha_v2("6LdmtcAZAAAAAC73DOUkWIK0zAo4wHaK7gJknjMp");
