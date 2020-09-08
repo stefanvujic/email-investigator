@@ -54,6 +54,61 @@ div#loader {
 	width: 125px;
 }
 
+#captcha_form {
+	display: none;
+}
+.site-title-text {
+    text-align: center;
+    background: #07a9c3;
+    border-radius: 5px 5px 0px 0px;
+    color: #ffff;
+}
+#submit-main-form, #request-pawnd-info {
+    background: #07a9c3;
+    border-color: #07a9c3;	
+}
+#request-pawnd-info {
+    font-size: 13px;	
+}
+.empty-message {
+    text-align: center;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+}
+.pawnd-tab {
+	margin-bottom: 14px;
+}
+.pawned-text-false {
+	margin-top: 11px;
+}
+.pawned-text-false {
+	font-weight: bold;
+}
+
+.pawned-message {
+    margin-top: 5%;
+    margin-bottom: -12px;
+}
+.pawned-row {
+    text-align: center;
+    min-height: 40px;
+    max-height: 40px;
+    height: 49px;
+    font-size: 14px;
+}
+.pawned-row-button {
+    text-align: center;
+    margin-top: 0.5%;
+    padding-bottom: 1.5%;
+}
+.pawnd-email-ok-message-row {
+    height: 129px;
+	text-align: center;
+	font-size: 14px;    
+}
+.pawnd-record {
+	font-weight: bold;
+}
 @media only screen and (max-width: 1281px) {
 	.container, .container-md, .container-sm {
 	    max-width: 900px;
@@ -69,22 +124,13 @@ div#loader {
 	    margin-left: 25px;
 	    margin-right: 25px;
 	}
-}
-#captcha_form {
-	display: none;
-}
-.site-title-text {
-    text-align: center;
-    background: #07a9c3;
-    border-radius: 5px 5px 0px 0px;
-    color: #ffff;
-}
-#submit-main-form {
-    background: #07a9c3;
-    border-color: #07a9c3;	
-}
-.empty-message {
-    text-align: center;
-    margin-bottom: 14px;
-    padding-bottom: 14px;
+	div.pawned-message {
+	    margin-top: 12%;
+	}	
+	div.false-pawned {
+		padding-top: 6px;
+	}
+	div.pawned-row-button {
+	    padding-bottom: 3%;
+	}	
 }
