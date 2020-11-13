@@ -10,56 +10,43 @@ $(function() {
 		$("#main-result").empty();
 		$('div#main-result').append(loader);
 		$("div#submit-main-form").css({"pointer-events": "none"});
-		$("div.tab").css({"background-color": "#212529", "box-shadow": "beige", "box-shadow": "0px 0px 0px 0px #00000042", "border-radius": "6px"});
+		$("div.tab").css({"background-color": "#212529", "box-shadow": "0px 0px 0px 0px #00000042", "border-radius": "6px"});
 
 		$.ajax({
 			type: "POST",
-			url: "http://localhost/ajax_controller.php",
+			url: "http://email-investigator.local/ajax_controller.php",
 			dataType:"json",
 			data: ({email : email, googleCapcha : capchaResponse}),
 			cache: false,
 
 			success: function(controllerData){
 				if (controllerData == "bad email") {
+					$("#loader").hide();
+					$("#submit-main-form").css({"pointer-events": "auto"});
 					$("#error-message").append("Please enter a valid email");
 				}else {
 					html = renderResult(controllerData);
 				}
 
-				console.log(controllerData);
-
 				$("div#main-result").append(html);
+				$(".pawned-company-description").hide();
 
-				$("#request-pawnd-info").on("click", function(){
-
-					$(".pawned-row-button").replaceWith("<div class='row' id='small-loader'><div class='col-sm-12 col-lg'><img src='/assets/loader.gif'/></div></div>");
-					var email = $("#email").val();
-
-					$.ajax({
-						type: "POST",
-						url: "http://localhost/ajax_controller.php",
-						dataType:"json",
-						data: ({email : email, morePawndInfo : 1}),
-						cache: false,
-
-						success: function(pawndData){
-							console.log(pawndData);
-						},
-
-						complete: function(){
-							$("#small-loader").hide();
-						}
-					});					
-				});
 			},
 
 			complete: function(){
-				$("div.tab").css({"background-color": "#333333", "box-shadow": "beige", "box-shadow": "1px -2px 20px 0px #00000042", "border-radius": "6px"});
+				console.log(controllerData);
+				$("div.tab").css({"background-color": "#333333", "box-shadow": "1px -2px 20px 0px #00000042", "border-radius": "6px"});
 				$("#submit-main-form").css({"pointer-events": "auto"});
 				$("#loader").hide();
+                                
+                $(".pawned-company-name").on("click", function(){
+                    $("." + $(this).attr("id")).slideToggle();
+                });
 			}
 		});
 	});
+        
+
 });
 
 function renderResult(controllerData) {
@@ -85,16 +72,18 @@ function renderResult(controllerData) {
 		html += "<div class='row pawned-row pawned-message'>";
 			html += "<div class='col-sm'>Your email has been found in the following data dumps</div>";	
 		html += "</div>";
+                
+                html += "<div class='pawnd-list-container'>";
+                    $.each(controllerData.data.have_i_been_pawned, function(companyKey, company) {
+                            html += "<div id='" + company.Name + "' class='row pawned-row pawned-company-name align-items-center'>";
+                                html += "<div class='col-sm col-lg record pawnd-record'>" + company.Name + "</div>";
+                            html += "</div>";
 
-		$.each(controllerData.data.have_i_been_pawned, function(siteKey, siteName) {
-			html += "<div class='row pawned-row align-items-center'>";
-				html += "<div class='col-sm col-lg record pawnd-record'>" + siteName + "</div>";
-			html += "</div>";
-		});
-
-		html += "<div class='row pawned-row-button'>";
-			html += "<div class='col-sm'><div id='request-pawnd-info' class='btn btn-primary'>Find Out More</div></div>";
-		html += "</div>";						
+                            html += "<div class='row pawned-row pawned-company-description align-items-center " + company.Name + "'>";
+                                    html += "<div class='col-sm col-lg record pawnd-record'><hr class='between-name-desc'>" + company.Description + "</div>";
+                            html += "</div>";			
+                    });
+                html += "</div>";
 	}
 
 	html += "</div>";

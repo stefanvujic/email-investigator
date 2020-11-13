@@ -1,7 +1,8 @@
 <?php
 
 function scrape_bing($email) {
-	$curl_response = curl_response("https://www.bing.com/search?q=", $email);
+	$headers = array();
+	$curl_response = curl_response("https://www.bing.com/search?q=", $email, $headers);
 	$dom = new simple_html_dom();
 	$dom->load($curl_response);
 
@@ -9,13 +10,27 @@ function scrape_bing($email) {
 	$bing_records = array();
 	foreach($dom->find("li.b_algo") as $result_container) {
 
-		$website_string = $result_container->find("div.b_attribution", 0)->plaintext;
-		$website = explode("/", $website_string);
-		$website = $website[0] . "//" . $website[2];
+		if ($result_container->find("div.b_attribution", 0)) {
+			$website_string = $result_container->find("div.b_attribution", 0)->plaintext;
+		}
+		if ($website_string) {
+			$website = explode("/", $website_string);
+			if (!empty($website[0]) && !empty($website[2])) {
+				$website = $website[0] . "//" . $website[2];
+			}
+		}
 
-		$title = $result_container->find("h2", 0)->plaintext;
-		$excerpt = $result_container->plaintext;
-		$url = $result_container->find("a", 0)->href;
+		if ($result_container->find("h2", 0)) {
+			$title = $result_container->find("h2", 0)->plaintext;
+		}
+
+		if ($result_container) {
+			$excerpt = $result_container->plaintext;
+		}
+
+		if ($result_container->find("a", 0)->href) {
+			$url = $result_container->find("a", 0)->href;
+		}
 
 		if (!empty($website) && !empty($title) && !empty($excerpt) && !empty($url)) {
 			$bing_records[$ctr]["website"] = $website;

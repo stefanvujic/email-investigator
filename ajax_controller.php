@@ -63,58 +63,39 @@ function call_have_i_been_pawned($email) {
     	"user-agent: email_investigator",
 	);
 
-	$breaches = curl_response("https://haveibeenpwned.com/api/v3/breachedaccount/", $email, $headers);
-	$breaches = json_decode($breaches);
-
-	$breach_list = array();
-	foreach ($breaches as $breach) {
-		foreach ($breach as $breach_name) {
-			$breach_list[] = $breach_name;
-		}
-	}
-
-	return $breach_list;
-}
-
-function get_more_pawned_info($email) {
-	$headers = array(
-    	"hibp-api-key: 356caf020183406f88b0a67e4c445867",
-    	"user-agent: email_investigator",
-	);
-
 	$breaches = curl_response("https://haveibeenpwned.com/api/v3/breachedaccount/", $email . "?truncateResponse=false", $headers);
-	$breaches = json_decode($breaches);
+	
+	if (!empty($breaches)) {
+		$breaches = json_decode($breaches);
+	}else {
+		$breaches = $breaches;
+	}
 
 	return $breaches;
 }
 
+if (isset($_POST["morePawndInfo"])) {
+	$get_more_pawned_info = $_POST["morePawndInfo"];
+}
+if (isset($_POST["email"])) {
+	$email = $_POST["email"];
+}
+$email = "stefanvujic576@gmail.com";
+if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-$email = $_POST["email"];
-$get_more_pawned_info = $_POST["morePawndInfo"];
-
-if ($email) {
-	if ($get_more_pawned_info) {
-		$breaches = get_more_pawned_info($email);
-		echo json_encode($breaches);
-	}else {
-		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$capcha_response = verify_recapcha_v2("6LdmtcAZAAAAAC73DOUkWIK0zAo4wHaK7gJknjMp");
-
-			// if ($capcha_response) {
-				echo json_encode(
-					array(
-						"data" => array(
-							"have_i_been_pawned" => call_have_i_been_pawned($email)
-						),	
-						"scrapers" => array(
-							"google" => scrape_google($email, 2),
-							"bing" => scrape_bing($email)
-						)
-					)
-				);
-			// }
-		}else {
-			echo json_encode("bad email");
-		}
-	}
+	// if ($capcha_response) {
+		echo json_encode(
+			array(
+				"data" => array(
+					"have_i_been_pawned" => call_have_i_been_pawned($email)
+				),	
+				"scrapers" => array(
+					"google" => scrape_google($email, 2),
+					"bing" => scrape_bing($email)
+				)
+			)
+		);
+	// }
+}else {
+	echo json_encode("bad email");
 }

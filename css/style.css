@@ -61,7 +61,7 @@ div#loader {
     text-align: center;
     background: #07a9c3;
     border-radius: 5px 5px 0px 0px;
-    color: #ffff;
+    color: #ffffff;
 }
 #submit-main-form, #request-pawnd-info {
     background: #07a9c3;
@@ -77,6 +77,7 @@ div#loader {
 }
 .pawnd-tab {
 	margin-bottom: 14px;
+        padding-bottom: 1%;
 }
 .pawned-text-false {
 	margin-top: 11px;
@@ -86,14 +87,12 @@ div#loader {
 }
 
 .pawned-message {
-    margin-top: 5%;
+    margin-top: 2%;
     margin-bottom: -12px;
 }
 .pawned-row {
     text-align: center;
     min-height: 40px;
-    max-height: 40px;
-    height: 49px;
     font-size: 14px;
 }
 .pawned-row-button {
@@ -109,6 +108,26 @@ div#loader {
 .pawnd-record {
 	font-weight: bold;
 }
+.pawned-company-description {
+    margin-top: -0.3%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 0%;
+    padding-bottom: 1%;
+    border-radius: 0px 0px 8px 8px;
+    background-color: #212529;
+}
+.pawned-company-name {
+    border-radius: 7px;
+    background-color: #212529;
+    margin: 1% 2% 0% 2%;
+    cursor: pointer;
+}
+.between-name-desc {
+    background: #07a9c3;
+    margin-top: 0.2%;
+}
+
 @media only screen and (max-width: 1281px) {
 	.container, .container-md, .container-sm {
 	    max-width: 900px;
@@ -125,12 +144,21 @@ div#loader {
 	    margin-right: 25px;
 	}
 	div.pawned-message {
-	    margin-top: 12%;
+	    margin-top: 3%;
 	}	
 	div.false-pawned {
-		padding-top: 6px;
+            padding-top: 6px;
 	}
 	div.pawned-row-button {
 	    padding-bottom: 3%;
-	}	
+	}
+        .pawned-company-description {
+            margin-top: -1%;
+            margin-left: 2%;
+            margin-right: 2%;
+            margin-bottom: 0%;
+            padding-bottom: 3%;
+            border-radius: 0px 0px 8px 8px;
+            background-color: #212529;
+        }        
 }
