@@ -1,5 +1,6 @@
 $(function() {
 	$("#submit-main-form").on("click", function(){
+		console.log("sdsdd");
 
 		var email = $("#email").val();
 		var loader = "<div class='row' id='loader'><div class='col-sm-12 col-lg'><img src='/assets/loader.gif'/></div></div>";
@@ -34,7 +35,7 @@ $(function() {
 			},
 
 			complete: function(){
-				console.log(controllerData);
+				// console.log(controllerData);
 				$("div.tab").css({"background-color": "#333333", "box-shadow": "1px -2px 20px 0px #00000042", "border-radius": "6px"});
 				$("#submit-main-form").css({"pointer-events": "auto"});
 				$("#loader").hide();
@@ -73,17 +74,17 @@ function renderResult(controllerData) {
 			html += "<div class='col-sm'>Your email has been found in the following data dumps</div>";	
 		html += "</div>";
                 
-                html += "<div class='pawnd-list-container'>";
-                    $.each(controllerData.data.have_i_been_pawned, function(companyKey, company) {
-                            html += "<div id='" + company.Name + "' class='row pawned-row pawned-company-name align-items-center'>";
-                                html += "<div class='col-sm col-lg record pawnd-record'>" + company.Name + "</div>";
-                            html += "</div>";
+        html += "<div class='pawnd-list-container'>";
+            $.each(controllerData.data.have_i_been_pawned, function(companyKey, company) {
+                    html += "<div id='" + company.Name + "' class='row pawned-row pawned-company-name align-items-center'>";
+                        html += "<div class='col-sm col-lg record pawnd-record'>" + company.Name + "</div>";
+                    html += "</div>";
 
-                            html += "<div class='row pawned-row pawned-company-description align-items-center " + company.Name + "'>";
-                                    html += "<div class='col-sm col-lg record pawnd-record'><hr class='between-name-desc'>" + company.Description + "</div>";
-                            html += "</div>";			
-                    });
-                html += "</div>";
+                    html += "<div class='row pawned-row pawned-company-description align-items-center " + company.Name + "'>";
+                            html += "<div class='col-sm col-lg record pawnd-record'><hr class='between-name-desc'>" + company.Description + "</div>";
+                    html += "</div>";			
+            });
+        html += "</div>";
 	}
 
 	html += "</div>";

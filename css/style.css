@@ -54,9 +54,6 @@ div#loader {
 	width: 125px;
 }
 
-#captcha_form {
-	display: none;
-}
 .site-title-text {
     text-align: center;
     background: #07a9c3;
