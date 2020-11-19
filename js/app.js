@@ -25,16 +25,23 @@ $(function() {
 					$("#submit-main-form").css({"pointer-events": "auto"});
 					$("#error-message").append("Please enter a valid email");
 				}else {
-					html = renderResult(controllerData);
+					if (controllerData == "bad captcha") {
+						$("#loader").hide();
+						$("#submit-main-form").css({"pointer-events": "auto"});					
+						$("#error-message").append("Please verify recapcha");
+					}else {
+						html = renderResult(controllerData);
+					}	
 				}
 
 				$("div#main-result").append(html);
 				$(".pawned-company-description").hide();
 
+				grecaptcha.reset();	
+
 			},
 
 			complete: function(){
-				// console.log(controllerData);
 				$("div.tab").css({"background-color": "#333333", "box-shadow": "1px -2px 20px 0px #00000042", "border-radius": "6px"});
 				$("#submit-main-form").css({"pointer-events": "auto"});
 				$("#loader").hide();
@@ -45,19 +52,18 @@ $(function() {
 			}
 		});
 	});
-        
-
 });
 
 function renderResult(controllerData) {
 	var html;
+
 	html = "";	
 	html += "<div class='tab pawnd-tab'>";
 	html += "<div class='row website-title'>";
 		html += "<div class='col-sm site-title-text'>Security</div>";
 	html += "</div>";
 
-	if (controllerData.data.have_i_been_pawned.length == false) {
+	if (controllerData.other.have_i_been_pawned.length == false) {
 		html += "<div class='row pawnd-email-ok-message-row false-pawned'>";
 			html += "<div class='col-sm'>"
 				html += "<h5>Email Safe</h5><img src='assets/tick.svg'></img><div class='col-sm pawned-text-false'>Your email has not been found in any known data leaks</div>"
@@ -74,7 +80,7 @@ function renderResult(controllerData) {
 		html += "</div>";
                 
         html += "<div class='pawnd-list-container'>";
-            $.each(controllerData.data.have_i_been_pawned, function(companyKey, company) {
+            $.each(controllerData.other.have_i_been_pawned, function(companyKey, company) {
                     html += "<div id='" + company.Name + "' class='row pawned-row pawned-company-name align-items-center'>";
                         html += "<div class='col-sm col-lg record pawnd-record'>" + company.Name + "</div>";
                     html += "</div>";
