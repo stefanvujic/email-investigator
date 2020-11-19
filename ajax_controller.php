@@ -1,6 +1,5 @@
 <?php
 define("CAPTCHA_SECRET", "6LdmtcAZAAAAAC73DOUkWIK0zAo4wHaK7gJknjMp");
-define("DOMAIN", "email-investigator.local");
 
 include('classes/class.scraper.php');
 include('classes/class.pawnd.php');
@@ -18,7 +17,7 @@ $pawnd = new Pawnd($email);
 $scraper = new Scraper($email);
 
 $recaptcha = new \ReCaptcha\ReCaptcha(CAPTCHA_SECRET);
-$captcha_resp = $recaptcha->setExpectedHostname(DOMAIN)
+$captcha_resp = $recaptcha->setExpectedHostname($_SERVER['SERVER_NAME'])
 				  ->verify($capcha_response, $_SERVER['SERVER_ADDR']);
 
 
@@ -26,7 +25,7 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 	if ($captcha_resp->isSuccess()) {
 		echo json_encode(
 			array(
-				"data" => array(
+				"other" => array(
 					"have_i_been_pawned" => $pawnd->get_breaches()
 				),	
 				"scrapers" => $scraper->scrape()

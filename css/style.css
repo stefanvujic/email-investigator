@@ -8,16 +8,10 @@ div.main-form {
 h1.big-logo {
 	text-align: center;
 }
-div.result-container-wrapper {
-/*	border-radius: 8px;
-    border-width: 2px;*/
-}
 div.main-result {
 	margin-left: 20px;
     margin-right: 20px;
     padding-top: 10px;
-/*    border-radius: 8px;
-    border-width: 2px;*/
 }
 
 div#loader-container {
@@ -124,6 +118,9 @@ div#loader {
     background: #07a9c3;
     margin-top: 0.2%;
 }
+.captcha-container {
+    margin-top: 25px;
+}
 
 @media only screen and (max-width: 1281px) {
 	.container, .container-md, .container-sm {
@@ -149,13 +146,13 @@ div#loader {
 	div.pawned-row-button {
 	    padding-bottom: 3%;
 	}
-        .pawned-company-description {
-            margin-top: -1%;
-            margin-left: 2%;
-            margin-right: 2%;
-            margin-bottom: 0%;
-            padding-bottom: 3%;
-            border-radius: 0px 0px 8px 8px;
-            background-color: #212529;
-        }        
+    .pawned-company-description {
+        margin-top: -1%;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-bottom: 0%;
+        padding-bottom: 3%;
+        border-radius: 0px 0px 8px 8px;
+        background-color: #212529;
+    }        
 }
