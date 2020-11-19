@@ -79,13 +79,19 @@ class Scraper
 			}
 
 			foreach ($this->google_records as $key => $google_record) {
-
-				if (strpos($google_record["title"], $this->email) !== false || strpos($google_record["excerpt"], $this->email) !== false) {
+				if ($key < 3) {
 					$this->result[$page][$key]["website"] = $google_record["website"];
 					$this->result[$page][$key]["title"] = $google_record["title"];
 					$this->result[$page][$key]["excerpt"] = $google_record["excerpt"];
 					$this->result[$page][$key]["url"] = str_replace("/url?q=", "", $google_record["url"]);
-				}
+				}else {
+					if (strpos($google_record["title"], $this->email) !== false || strpos($google_record["excerpt"], $this->email) !== false) {
+						$this->result[$page][$key]["website"] = $google_record["website"];
+						$this->result[$page][$key]["title"] = $google_record["title"];
+						$this->result[$page][$key]["excerpt"] = $google_record["excerpt"];
+						$this->result[$page][$key]["url"] = str_replace("/url?q=", "", $google_record["url"]);
+					}
+				}	
 			}
 		}
 
@@ -126,11 +132,22 @@ class Scraper
 				$url = $result_container->find("a", 0)->href;
 			}
 
-			if (!empty($website) && !empty($title) && !empty($excerpt) && !empty($url)) {
-				$this->bing_records[$ctr]["website"] = $website;
-				$this->bing_records[$ctr]["title"] = $title;
-				$this->bing_records[$ctr]["excerpt"] = $excerpt;
-				$this->bing_records[$ctr]["url"] = $url;
+			if ($ctr < 3) {
+				if (!empty($website) && !empty($title) && !empty($excerpt) && !empty($url)) {
+					$this->bing_records[$ctr]["website"] = $website;
+					$this->bing_records[$ctr]["title"] = $title;
+					$this->bing_records[$ctr]["excerpt"] = $excerpt;
+					$this->bing_records[$ctr]["url"] = $url;
+				}
+			}else {
+				if (strpos($bing_records["title"], $this->email) !== false || strpos($bing_records["excerpt"], $this->email) !== false) {
+					if (!empty($website) && !empty($title) && !empty($excerpt) && !empty($url)) {
+						$this->bing_records[$ctr]["website"] = $website;
+						$this->bing_records[$ctr]["title"] = $title;
+						$this->bing_records[$ctr]["excerpt"] = $excerpt;
+						$this->bing_records[$ctr]["url"] = $url;
+					}
+				}	
 			}
 
 			$ctr++;

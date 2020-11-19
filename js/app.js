@@ -1,6 +1,5 @@
 $(function() {
 	$("#submit-main-form").on("click", function(){
-		console.log("sdsdd");
 
 		var email = $("#email").val();
 		var loader = "<div class='row' id='loader'><div class='col-sm-12 col-lg'><img src='/assets/loader.gif'/></div></div>";
@@ -55,7 +54,7 @@ function renderResult(controllerData) {
 	html = "";	
 	html += "<div class='tab pawnd-tab'>";
 	html += "<div class='row website-title'>";
-		html += "<div class='col-sm site-title-text'>Has your email been compromised?</div>";
+		html += "<div class='col-sm site-title-text'>Security</div>";
 	html += "</div>";
 
 	if (controllerData.data.have_i_been_pawned.length == false) {
@@ -94,7 +93,7 @@ function renderResult(controllerData) {
 
 			html += "<div class='tab " + scraperName + "-tab'>";
 			html += "<div class='row website-title'>";
-				html += "<div class='col-sm site-title-text'>" + scraperName + "</div>";
+				html += "<div class='col-sm site-title-text'>" + scraperName.charAt(0).toUpperCase() + scraperName.slice(1) + "</div>";
 			html += "</div>";
 
 			html += "<div class='col-sm col-lg empty-message'>Nothing found</div>";
@@ -104,7 +103,7 @@ function renderResult(controllerData) {
 
 			html += "<div class='tab " + scraperName + "-tab'>";
 			html += "<div class='row website-title'>";
-				html += "<div class='col-sm site-title-text'>" + scraperName + "</div>";
+				html += "<div class='col-sm site-title-text'>" + scraperName.charAt(0).toUpperCase() + scraperName.slice(1) + "</div>";
 			html += "</div>";
 
 			$.each(scraperData, function(pageIndex, pageData) {
